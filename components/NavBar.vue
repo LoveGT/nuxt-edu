@@ -33,7 +33,7 @@
   <SearchBar ref="searchBarRef" />
 </template>
 
-<script setup>
+<script setup name="NavBar">
 import { NButton, NIcon, NDropdown, NAvatar } from "naive-ui";
 import { Search } from "@vicons/ionicons5";
 

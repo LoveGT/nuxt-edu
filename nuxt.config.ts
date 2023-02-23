@@ -1,3 +1,4 @@
+import VueSetupExtend from "unplugin-vue-setup-extend/vite"
 export default defineNuxtConfig({
   app: {
     head: {
@@ -30,11 +31,12 @@ export default defineNuxtConfig({
     ],
   },
   vite: {
+    plugins: [VueSetupExtend({})],
     optimizeDeps: {
       include: ["date-fns-tz/esm/formatInTimeZone"],
     },
   },
   imports: {
-    dirs: ['apis']
+    dirs: ["apis"],
   },
 });

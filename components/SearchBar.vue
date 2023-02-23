@@ -47,7 +47,10 @@ const handleSearch = () => {
   });
 };
 const handleEnterEvent = (e) => {
-  console.log(e)
+  if(e.key === 'Enter' && keyword.value) {
+    console.log(e.key,'qqqqq')
+    handleSearch()
+  }
 };
 const addKeydownEvent = () => document.addEventListener('keydown', handleEnterEvent)
 const removeKeydownEvent = () => document.removeEventListener('keydown', handleEnterEvent)
