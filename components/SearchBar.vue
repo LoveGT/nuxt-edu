@@ -48,7 +48,6 @@ const handleSearch = () => {
 };
 const handleEnterEvent = (e) => {
   if(e.key === 'Enter' && keyword.value) {
-    console.log(e.key,'qqqqq')
     handleSearch()
   }
 };
