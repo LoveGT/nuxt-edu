@@ -19,7 +19,9 @@
           </n-icon>
         </template>
       </n-button>
-      <n-button secondary strong>登录</n-button>
+      <NuxtLink to="/login">
+        <n-button secondary strong>登录</n-button>
+      </NuxtLink>
       <n-dropdown :options="userOptions">
         <n-avatar
           round

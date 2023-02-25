@@ -37,5 +37,3 @@ defineProps({
   item: Object,
 });
 </script>
-
-<style lang="scss" scoped></style>

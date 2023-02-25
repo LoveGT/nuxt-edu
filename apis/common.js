@@ -1,6 +1,8 @@
 export function useSearchListApi(query) {
-  const q = useQueryToString(query);
-  return useHttpGet("searchList", `/search${q}`, {
+  return useHttpGet("searchList", ()=> {
+    const q = useQueryToString(query());
+    return `/search${q}`
+  }, {
     lazy: true,
   });
 }

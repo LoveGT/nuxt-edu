@@ -11,6 +11,9 @@
       >
     </UiTab>
     <LoadingGroup :pending="pending" :error="error">
+      <template #loading>
+        <LoadingCourseSkeleton />
+      </template>
       <n-grid :x-gap="20" :cols="4">
         <n-gi v-for="(item, index) in rows" :key="index">
           <CourseList :item="item"></CourseList>
@@ -59,27 +62,48 @@ const handleClick = (t) => {
   });
 };
 
-const page = ref(parseInt(route.params.page));
-const limit = ref(10);
-const { data, pending, error, refresh } = await useSearchListApi({
-  page: page.value,
-  keyword: encodeURIComponent(title.value),
-  type: type.value,
-});
-const rows = computed(() => data.value?.rows ?? []);
-const total = computed(() => data.value?.count ?? 0)
+const {
+    page,
+    limit,
+    pending,
+    error,
+    refresh,
+    rows,
+    total,
+    onUpdatePage
+  } = await usePage(({ page, limit }) => useSearchListApi(() => ({
+      page,
+      keyword: encodeURIComponent(title.value),
+      type: type.value,
+    }))
+  );
+    
+// const page = ref(parseInt(route.params.page));
+// const limit = ref(10);
+// const { data, pending, error, refresh } = await useSearchListApi(() =>({
+//   page: page.value,
+//   keyword: encodeURIComponent(title.value),
+//   type: type.value,
+// }));
+// const rows = computed(() => data.value?.rows ?? []);
+// const total = computed(() => data.value?.count ?? 0)
 
-const onUpdatePage = (page)  => {
-  navigateTo({
-    params: {
-      ...route.params,
-      page: page
-    },
-    query: {
-      ...route.query
-    }
-  })
-}
+// const onUpdatePage = (page)  => {
+//   navigateTo({
+//     params: {
+//       ...route.params,
+//       page: page
+//     },
+//     query: {
+//       ...route.query
+//     }
+//   })
+// }
+const stop = watch(()=> route.query.keyword, (newVal) => {
+  title.value = newVal
+  refresh()
+})
+onBeforeUnmount(() => stop() )
 definePageMeta({
   middleware: ["search"],
 });

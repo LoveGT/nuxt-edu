@@ -1,7 +1,9 @@
 <template>
   <div>
     <template v-if="loading">
-      <LoadingSkeleton />
+      <slot name="loading">
+       <LoadingSkeleton />
+      </slot>
     </template>
     <template v-else-if="error">
       <n-result
@@ -46,5 +48,3 @@ const stop = watchEffect(() => {
 });
 onBeforeUnmount(() => stop());
 </script>
-
-<style lang="scss" scoped></style>

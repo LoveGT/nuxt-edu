@@ -18,5 +18,3 @@ defineProps({
   data: Array,
 });
 </script>
-
-<style lang="scss" scoped></style>

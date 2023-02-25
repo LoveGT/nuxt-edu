@@ -15,7 +15,3 @@ const onImageError = (e) => {
   e.target.src = "/fail.png"
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
