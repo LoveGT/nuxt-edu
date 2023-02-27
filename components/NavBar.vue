@@ -19,14 +19,14 @@
           </n-icon>
         </template>
       </n-button>
-      <NuxtLink to="/login">
+      <NuxtLink to="/login" v-if="!user">
         <n-button secondary strong>登录</n-button>
       </NuxtLink>
-      <n-dropdown :options="userOptions">
+      <n-dropdown v-else :options="userOptions" @select="onSelect">
         <n-avatar
           round
           size="small"
-          src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+          :src="user.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'"
         />
       </n-dropdown>
     </div>
@@ -36,8 +36,10 @@
 </template>
 
 <script setup name="NavBar">
-import { NButton, NIcon, NDropdown, NAvatar } from "naive-ui";
+import { NButton, NIcon, NDropdown, NAvatar, createDiscreteApi } from "naive-ui";
 import { Search } from "@vicons/ionicons5";
+
+const user = useUser()
 
 const route = useRoute();
 const menus = [
@@ -167,6 +169,24 @@ const userOptions = [
 ];
 const searchBarRef = ref(null);
 const openSearch = () => searchBarRef.value.open()
+const onSelect = (k) => {
+  switch (k) {
+    case 'logout':
+        const { dialog } = createDiscreteApi(['dialog'])
+        dialog.warning({
+          content: '是否要确认登录',
+          positiveText: '退出',
+          negativeText: '取消',
+          onPositiveClick: async () => {
+            await useLogout()
+          }
+        })
+      break;
+  
+    default:
+      break;
+  }
+} 
 </script>
 
 <style scoped>
