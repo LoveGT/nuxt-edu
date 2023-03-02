@@ -21,7 +21,9 @@
     <n-button quaternary type="primary" size="tiny" @click="changeType">
       {{ type === 'login' ? '注册' : '登录' }}
     </n-button>
-    <n-button quaternary type="primary" size="tiny">忘记密码</n-button>
+    <nuxt-link to="/forget">
+      <n-button quaternary type="primary" size="tiny">忘记密码</n-button>
+    </nuxt-link>
   </div>
   <div>
     <n-button type="primary" class="w-full" @click="onSubmit" :loading="loading">
@@ -100,18 +102,25 @@ const onSubmit = () => {
   formRef.value?.validate(async (errors) => {
     if(errors) return
     loading.value = true
-    const { data,error } = await useLoginApi(form)
+    const { data,error } = type.value === 'login' ? await useLoginApi(form) : await useRegApi(form)
     loading.value = false
+
     if (error.value) return
+    
     const { message } = createDiscreteApi(['message'])
-    message.success('登录成功')
-    // 将用户登录成功返回的token存储在cookie中，用户登录成功的标识
-    const token = useCookie('token')
-    token.value = data.value.token
-    const user = useUser()
-    user.value = data.value
-    // 跳转
-    navigateTo(route.query.from || "/", { replace: true })
+    message.success(type.value === 'login' ?'登录成功' : '注册成功')
+
+    if(type.value === 'login') {
+      // 将用户登录成功返回的token存储在cookie中，用户登录成功的标识
+      const token = useCookie('token')
+      token.value = data.value.token
+      const user = useUser()
+      user.value = data.value
+      // 跳转
+      navigateTo(route.query.from || "/", { replace: true })
+    } else {
+      changeType()
+    }
   })
   .catch((err) => {
     console.log(err);
@@ -121,7 +130,8 @@ const onSubmit = () => {
 useEnterEvent(() => onSubmit())
 
 definePageMeta({
-  layout: "login"
+  layout: "login",
+  middleware: ['only-visitor']
 })
 </script>
 

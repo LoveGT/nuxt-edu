@@ -160,7 +160,7 @@ const isMenuItemActive = (item) => {
 const userOptions = [
   {
     label: "用户中心",
-    key: "profile",
+    key: "center",
   },
   {
     label: "退出",
@@ -170,6 +170,7 @@ const userOptions = [
 const searchBarRef = ref(null);
 const openSearch = () => searchBarRef.value.open()
 const onSelect = (k) => {
+  console.log(k);
   switch (k) {
     case 'logout':
         const { dialog } = createDiscreteApi(['dialog'])
@@ -182,7 +183,10 @@ const onSelect = (k) => {
           }
         })
       break;
-  
+    case "center": 
+        navigateTo({
+          path: '/user/history/1'
+        })
     default:
       break;
   }
