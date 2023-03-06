@@ -44,3 +44,22 @@ export function useUserHistoryApi(query) {
     lazy: true,
   });
 }
+
+// 获取购买记录
+export function useOrderListApi(page) {
+  return useHttpGet("userOrderList", `/order/list?page=${page}`,{
+    lazy: true,
+  })
+}
+// 我的考试记录
+export function useUserTestApi(page) {
+  return useHttpGet("userTest", `/user_test/list?page=${page}`,{
+    lazy: true,
+  })
+}
+// 我的帖子列表
+export function useMyPostListApi(page) {
+  return useHttpGet("myPostList", `/mypost?page=${page}`,{
+    lazy: true,
+  })
+}

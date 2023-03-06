@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2023-03-02 15:41:25
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2023-03-06 15:08:42
+-->
 <template>
   <div>
     <UiTab>
@@ -9,7 +17,7 @@
         >{{ item.label }}</UiTabItem
       >
     </UiTab>
-    <LoadingGroup :pending="pending" :error="error">
+    <LoadingGroup :pending="pending" :error="error" :is-empty="!rows.length">
       <div class="px-3">
         <UserHistoryList v-for="item in rows" :key="item.id" :item="item"/>
       </div>

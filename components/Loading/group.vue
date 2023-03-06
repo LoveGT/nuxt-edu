@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2023-02-24 16:01:56
+ * @LastEditors: 
+ * @LastEditTime: 2023-03-06 15:01:40
+-->
 <template>
   <div>
     <template v-if="loading">
@@ -17,6 +25,9 @@
         </template>
       </n-result>
     </template>
+    <template v-else-if="isEmpty">
+      <Empty />
+    </template>
     <template v-else>
       <slot />
     </template>
@@ -34,9 +45,14 @@ const props = defineProps({
     type: [String, Boolean, Symbol],
     default: false,
   },
+  isEmpty: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const loading = ref(false);
+
 const stop = watchEffect(() => {
   if (props.pending && !loading.value) {
     loading.value = true;
@@ -46,5 +62,6 @@ const stop = watchEffect(() => {
     }, 200);
   }
 });
+
 onBeforeUnmount(() => stop());
 </script>

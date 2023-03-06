@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2023-03-02 15:16:12
+ * @LastEditors: 
+ * @LastEditTime: 2023-03-06 15:12:02
+-->
 <template>
   <div>
     <n-grid :x-gap="20">
@@ -32,11 +40,14 @@ const menus = [{
   title: "学习记录",
   name: 'user-history-page'
 },{ 
-  title: '购买记录'
+  title: '购买记录',
+  name: 'user-buy-page'
 },{ 
-  title: '我的考试'
+  title: '我的考试',
+  name: 'user-test-page'
 },{ 
-  title: '我的帖子'
+  title: '我的帖子',
+  name: 'user-post-page'
 },{ 
   title: '优惠券记录'
 },{ 
