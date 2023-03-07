@@ -49,11 +49,14 @@ const menus = [{
   title: '我的帖子',
   name: 'user-post-page'
 },{ 
-  title: '优惠券记录'
+  title: '优惠券记录',
+  name: 'user-coupon-page'
 },{ 
-  title: '我的收藏'
+  title: '我的收藏',
+  name: 'user-collection-page'
 },{ 
-  title: '修改资料'
+  title: '修改资料',
+  name: 'user-edit'
 },{ 
   title: '其他设置'
 },]

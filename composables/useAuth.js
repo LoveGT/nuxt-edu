@@ -53,3 +53,36 @@ export function useHasAuth(callback = null ) {
     callback()
    }
 }
+
+// 点赞/取消点赞
+export function useHandleSupportPost() {
+  const loading = ref(false)
+  const onSupport = (item) => {
+    useHasAuth(async () => {
+      const type = item.isSupport ? 'unsupport' : 'support';
+      const msg = item.isSupport ? '取消点赞' : '点赞'
+  
+      loading.value = true
+      const { error } = await usePostSupportApi(item.id, type)
+      loading.value = false
+  
+      // 操作失败， 直接终止
+      if(error.value) return
+  
+      // 点赞数 +1/-1
+      if(type === 'unsupport') {
+        item.support_count--
+      }else {
+        item.support_count++
+      }
+  
+      item.isSupport = !item.isSupport
+      const { message } = createDiscreteApi(['message'])
+      message.success(msg + '成功')
+    })
+  }
+  return {
+    loading,
+    onSupport
+  }
+}

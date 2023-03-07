@@ -9,7 +9,12 @@
 <template>
   <LoadingGroup :pending="pending" :error="error" :is-empty="!rows.length">
       <div class="p-3">
-        <PostList v-for="item in rows" :key="item.id" :item="item" @delete="onDelete"/>
+        <n-grid :x-gap="20" :cols="2">
+          <n-gi v-for="item in rows " :key="item.id">
+              <UserCouponList :item="item"/>
+          </n-gi>
+        </n-grid>
+        
       </div>
       <div class="flex justify-center items-center mt-5 pb-10">
         <n-pagination
@@ -23,9 +28,9 @@
     </LoadingGroup>
 </template>
 <script setup>
-import { NPagination } from 'naive-ui';
+import { NGi, NGrid, NPagination } from 'naive-ui';
 
-useHead({ title: '我的帖子'})
+useHead({ title: '优惠券记录'})
 
 const {
     page,
@@ -36,15 +41,5 @@ const {
     rows,
     total,
     onUpdatePage
-  } = await usePage(({ page, limit }) => useMyPostListApi(page))
-
-  const onDelete = async ({ id, success, fail }) => {
-    const { error } = await useDeletePostApi(id)
-    if (error.value) {
-      fail()
-    } else {
-      success()
-      refresh()
-    }
-  }
+  } = await usePage(({ page, limit }) => useUserCouponApi(page))
 </script>

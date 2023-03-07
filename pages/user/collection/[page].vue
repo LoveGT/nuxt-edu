@@ -9,7 +9,7 @@
 <template>
   <LoadingGroup :pending="pending" :error="error" :is-empty="!rows.length">
       <div class="p-3">
-        <PostList v-for="item in rows" :key="item.id" :item="item" @delete="onDelete"/>
+        <UserCollectionList v-for="item in rows" :key="item.id" :item="item" @delete="onDelete"/>
       </div>
       <div class="flex justify-center items-center mt-5 pb-10">
         <n-pagination
@@ -25,7 +25,7 @@
 <script setup>
 import { NPagination } from 'naive-ui';
 
-useHead({ title: '我的帖子'})
+useHead({ title: '我的收藏'})
 
 const {
     page,
@@ -36,15 +36,19 @@ const {
     rows,
     total,
     onUpdatePage
-  } = await usePage(({ page, limit }) => useMyPostListApi(page))
+  } = await usePage(({ page, limit }) => useMyFavaListApi(page))
 
-  const onDelete = async ({ id, success, fail }) => {
-    const { error } = await useDeletePostApi(id)
-    if (error.value) {
-      fail()
-    } else {
-      success()
-      refresh()
-    }
+const onDelete = async ({ goods_id, type, success, fail }) => {
+  const { error } = await useUncollectApi({
+    goods_id,
+    type
+  })
+
+  if(error.value) {
+    fail()
+  } else {
+    success()
+    refresh()
   }
+}
 </script>

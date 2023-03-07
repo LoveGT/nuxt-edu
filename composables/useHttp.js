@@ -1,5 +1,5 @@
 import { createDiscreteApi } from "naive-ui";
-const fetchConfig = {
+export const fetchConfig = {
   baseURL: "http://demonuxtapi.dishait.cn/pc",
   headers: {
     appid: "bd9d01ecc75dbbaaefce",

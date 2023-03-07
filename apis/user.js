@@ -63,3 +63,41 @@ export function useMyPostListApi(page) {
     lazy: true,
   })
 }
+// 优惠券列表
+export function useUserCouponApi(page) {
+  return useHttpGet("userCoupon", `/user_coupon?page=${page}`,{
+    lazy: true,
+  })
+}
+
+// 我的收藏
+export function useMyFavaListApi(page) {
+  return useHttpGet("myFavaList", `/user_fava?page=${page}`,{
+    lazy: true,
+  })
+}
+
+// 取消收藏
+export function useUncollectApi(body) {
+  return useHttpPost("uncollect", '/uncollect', {
+    body
+  })
+}
+
+// 修改资料
+export function useUpdateInfoApi(body) {
+  return useHttpPost("updateInfo", '/update_info', {
+    body
+  })
+}
+
+export function useUploadConfig() {
+  const token = useCookie('token')
+  return {
+    action: fetchConfig.baseURL + '/upload',
+    headers: {
+      appid: fetchConfig.headers.appid,
+      token: token.value
+    }
+  }
+}
